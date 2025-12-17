@@ -1,0 +1,181 @@
+-- Task 1: Rank the top 10 most temperate cities across the dataset
+-- "Temperate" means cities with the lowest temperature variations (most stable temperatures)
+
+
+-- Copy Datasets to namenode
+sudo docker cp /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/Datasets/locationData.csv namenode:/tmp/
+
+sudo docker cp /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/Datasets/weatherData.csv namenode:/tmp/
+
+-- Enter namenode container
+sudo docker exec -it namenode bash
+
+-- Inside namenode, create directories for data
+hdfs dfs -mkdir -p /user/hive/warehouse/weather_analytics.db/location
+hdfs dfs -mkdir -p /user/hive/warehouse/weather_analytics.db/weather
+
+
+--Upload Data to hdfs
+hdfs dfs -put /tmp/locationData.csv /user/hive/warehouse/weather_analytics.db/location/
+hdfs dfs -put /tmp/weatherData.csv /user/hive/warehouse/weather_analytics.db/weather/
+
+--verify data uploaded
+# View first few lines of uploaded data
+hdfs dfs -cat /user/hive/warehouse/weather_analytics.db/location/locationData.csv | head -5
+hdfs dfs -cat /user/hive/warehouse/weather_analytics.db/weather/weatherData.csv | head -5
+
+-- View first few lines of uploaded data
+hdfs dfs -cat /user/hive/warehouse/weather_analytics.db/location/locationData.csv | head -5
+hdfs dfs -cat /user/hive/warehouse/weather_analytics.db/weather/weatherData.csv | head -5
+
+-- Exit from the namenode container
+exit
+
+-- Check whether hive-server and hive-metastore are running. If not start them
+docker ps -a
+docker start hive-metastore
+docker start hive-server
+
+--Connect to hive server
+sudo docker exec -it hive-server bash
+
+
+--create hive database and tables
+-- Create database
+CREATE DATABASE IF NOT EXISTS weather_analytics;
+
+-- Show all databases
+SHOW DATABASES;
+
+-- Use the database
+USE weather_analytics;
+
+-- Verify you're in the correct database
+SELECT current_database();
+
+
+-- Drop table if exists for fresh start
+DROP TABLE IF EXISTS location_data;
+
+-- Create managed table for location data
+CREATE TABLE location_data (
+    location_id INT,
+    latitude DOUBLE,
+    longitude DOUBLE,
+    elevation INT,
+    utc_offset_seconds INT,
+    timezone STRING,
+    timezone_abbreviation STRING,
+    city_name STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+TBLPROPERTIES ('skip.header.line.count'='1');
+
+-- Create managed table for weather data  
+CREATE TABLE weather_data (
+    location_id INT,
+    date_recorded STRING,
+    weather_code INT,
+    temperature_2m_max DOUBLE,
+    temperature_2m_min DOUBLE,
+    temperature_2m_mean DOUBLE,
+    apparent_temperature_max DOUBLE,
+    apparent_temperature_min DOUBLE,
+    apparent_temperature_mean DOUBLE,
+    daylight_duration DOUBLE,
+    sunshine_duration DOUBLE,
+    precipitation_sum DOUBLE,
+    rain_sum DOUBLE,
+    precipitation_hours DOUBLE,
+    wind_speed_10m_max DOUBLE,
+    wind_gusts_10m_max DOUBLE,
+    wind_direction_10m_dominant INT,
+    shortwave_radiation_sum DOUBLE,
+    et0_fao_evapotranspiration DOUBLE,
+    sunrise STRING,
+    sunset STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+TBLPROPERTIES ('skip.header.line.count'='1');
+
+--Load data into the created Hive tables
+LOAD DATA INPATH '/user/hive/warehouse/weather_analytics.db/location/locationData.csv' INTO TABLE location_data;
+LOAD DATA INPATH '/user/hive/warehouse/weather_analytics.db/weather/weatherData.csv' INTO TABLE weather_data;
+
+-- Verify table created and data loaded
+DESCRIBE location_data;
+SELECT COUNT(*) FROM location_data;
+SELECT * FROM location_data LIMIT 5;
+
+DESCRIBE weather_data;
+SELECT COUNT(*) FROM weather_data;
+SELECT * FROM weather_data LIMIT 5;
+
+
+
+----- Query to find top 10 most temperate cities
+SELECT 
+    l.city_name AS city_name,
+    ROUND(AVG(w.temperature_2m_max), 2) AS avg_max_temp
+FROM 
+    weather_data w
+JOIN 
+    location_data l 
+    ON w.location_id = l.location_id
+WHERE 
+    w.temperature_2m_max IS NOT NULL
+GROUP BY 
+    l.city_name
+ORDER BY 
+    avg_max_temp ASC
+LIMIT 10;
+
+--Inorder to display column names in output
+set hive.cli.print.header=true;
+
+--Create a table to output results
+-- Drop table if exists
+DROP TABLE IF EXISTS top_temperate_cities;
+
+-- Create table with results (same logic as PySpark)
+CREATE TABLE top_temperate_cities AS
+SELECT 
+    l.city_name AS city_name,
+    ROUND(AVG(w.temperature_2m_max), 2) AS avg_max_temp
+FROM 
+    weather_data w
+JOIN 
+    location_data l 
+    ON w.location_id = l.location_id
+WHERE 
+    w.temperature_2m_max IS NOT NULL
+GROUP BY 
+    l.city_name
+ORDER BY 
+    avg_max_temp ASC
+LIMIT 10;
+
+
+-- Export Results to CSV
+INSERT OVERWRITE LOCAL DIRECTORY '/tmp/task2-2-1_results'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+SELECT CAST('city_name' AS STRING), CAST('avg_max_temp' AS DOUBLE)
+UNION ALL
+SELECT 
+    city_name,
+    avg_max_temp
+FROM top_temperate_cities;
+
+
+sudo docker cp hive-server:/tmp/task2-2-1_results/000000_0 /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/RGU_ID_2522702_IIT_ID_20250693/Task_2/task_2-2_hive/outputs/task2-2-1_top_temperate_cities.csv
+
+
+
+
+
+

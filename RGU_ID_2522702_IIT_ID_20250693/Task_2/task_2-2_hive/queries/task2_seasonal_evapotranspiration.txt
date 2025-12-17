@@ -1,0 +1,98 @@
+-- Task 2: Calculate average evapotranspiration for each major agricultural season
+-- Season 1: September to March (Maha Season - Main cultivation season)
+-- Season 2: April to August (Yala Season - Minor cultivation season)
+
+--Follow same steps from the previous task to load data into hive tables.
+
+-- First, we need to extract month from the date string
+-- Date format in dataset: M/D/YYYY or MM/DD/YYYY
+
+--Create temp table with parsed dates
+CREATE TABLE weather_with_month AS
+SELECT 
+    location_id,
+    date_recorded,
+    et0_fao_evapotranspiration,
+    CAST(SPLIT(date_recorded, '/')[0] AS INT) AS month_num
+FROM 
+    weather_data
+WHERE 
+    et0_fao_evapotranspiration IS NOT NULL;
+
+-- Verify temp table
+SELECT * FROM weather_with_month LIMIT 10;
+SELECT COUNT(*) FROM weather_with_month;
+
+-- Calculate seasonal evapotranspiration by district/city
+SELECT 
+    l.city_name AS city_name,
+    CASE 
+        WHEN w.month_num IN (9, 10, 11, 12, 1, 2, 3) THEN 'Maha (Sep-Mar)'
+        WHEN w.month_num IN (4, 5, 6, 7, 8) THEN 'Yala (Apr-Aug)'
+    END AS season,
+    ROUND(AVG(w.et0_fao_evapotranspiration), 2) AS avg_evapotranspiration
+FROM 
+    weather_with_month w
+JOIN 
+    location_data l 
+    ON w.location_id = l.location_id
+WHERE 
+    w.month_num IN (1,2,3,4,5,6,7,8,9,10,11,12)  -- exclude "Other"
+GROUP BY 
+    l.city_name,
+    CASE 
+        WHEN w.month_num IN (9, 10, 11, 12, 1, 2, 3) THEN 'Maha (Sep-Mar)'
+        WHEN w.month_num IN (4, 5, 6, 7, 8) THEN 'Yala (Apr-Aug)'
+    END
+ORDER BY 
+    city_name,
+    season;
+
+-- create a table to store the results
+
+CREATE TABLE seasonal_evapotranspiration_by_district AS
+SELECT 
+    l.city_name AS city_name,
+    CASE 
+        WHEN w.month_num IN (9, 10, 11, 12, 1, 2, 3) THEN 'Maha (Sep-Mar)'
+        WHEN w.month_num IN (4, 5, 6, 7, 8) THEN 'Yala (Apr-Aug)'
+    END AS season,
+    ROUND(AVG(w.et0_fao_evapotranspiration), 2) AS avg_evapotranspiration
+FROM 
+    weather_with_month w
+JOIN 
+    location_data l 
+    ON w.location_id = l.location_id
+WHERE 
+    w.month_num IN (1,2,3,4,5,6,7,8,9,10,11,12)  -- exclude "Other"
+GROUP BY 
+    l.city_name,
+    CASE 
+        WHEN w.month_num IN (9, 10, 11, 12, 1, 2, 3) THEN 'Maha (Sep-Mar)'
+        WHEN w.month_num IN (4, 5, 6, 7, 8) THEN 'Yala (Apr-Aug)'
+    END
+ORDER BY 
+    city_name,
+    season;
+
+
+
+-- Export Results to CSV
+INSERT OVERWRITE LOCAL DIRECTORY '/tmp/task2-2-2_results'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+SELECT CAST('city_name' AS STRING), CAST('season' AS STRING), CAST('avg_evapotranspiration' AS DOUBLE)
+UNION ALL
+SELECT 
+    city_name,
+    season,
+    avg_evapotranspiration
+FROM  seasonal_evapotranspiration_by_district;
+
+
+#Excute from directory location after exiting hive shell
+sudo docker cp hive-server:/tmp/task2-2-2_results/000000_0 /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/RGU_ID_2522702_IIT_ID_20250693/Task_2/task_2-2_hive/outputs/task2-2-2_seasonal_evapotranspiration_by_district.csv
+
+
+
+
