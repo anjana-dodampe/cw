@@ -2,7 +2,7 @@
 -- Season 1: September to March (Maha Season - Main cultivation season)
 -- Season 2: April to August (Yala Season - Minor cultivation season)
 
---Follow same steps from the previous task to load data into hive tables.
+--Follow same steps from the previous task to load data into hive tables
 
 -- First, we need to extract month from the date string
 -- Date format in dataset: M/D/YYYY or MM/DD/YYYY
