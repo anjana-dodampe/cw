@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Analysis Dashboard - CMM705 Coursework</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Sri Lanka Weather Analysis Dashboard</h1>
+            <p class="subtitle">Weather Data Analysis 2010-2024</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Key Metrics Section -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <h3>Total Records</h3>
+                <p class="metric-value">5.2M</p>
+                <p class="metric-label">observations analyzed</p>
+            </div>
+            <div class="metric-card">
+                <h3>Districts</h3>
+                <p class="metric-value">25</p>
+                <p class="metric-label">across Sri Lanka</p>
+            </div>
+            <div class="metric-card">
+                <h3>Data Period</h3>
+                <p class="metric-value">2010-2024</p>
+                <p class="metric-label">14.5 years</p>
+            </div>
+            <div class="metric-card">
+                <h3>Extreme Days</h3>
+                <p class="metric-value">1,847</p>
+                <p class="metric-label">recorded events</p>
+            </div>
+        </section>
+
+        <!-- Visualization 1: Most Precipitous Month/Season -->
+        <section class="chart-section">
+            <h2>1. Peak Precipitation Month by District</h2>
+            <p class="description">Identifying when each district receives the most rainfall throughout the year</p>
+            
+            <div class="district-precipitation-grid">
+                <div class="district-card">
+                    <h4>Ratnapura</h4>
+                    <div class="peak-month">October</div>
+                    <div class="precipitation-amount">485mm avg</div>
+                    <div class="season-badge monsoon">Southwest Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Kalutara</h4>
+                    <div class="peak-month">October</div>
+                    <div class="precipitation-amount">398mm avg</div>
+                    <div class="season-badge monsoon">Inter-Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Galle</h4>
+                    <div class="peak-month">November</div>
+                    <div class="precipitation-amount">387mm avg</div>
+                    <div class="season-badge monsoon">Northeast Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Matara</h4>
+                    <div class="peak-month">November</div>
+                    <div class="precipitation-amount">371mm avg</div>
+                    <div class="season-badge monsoon">Northeast Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Colombo</h4>
+                    <div class="peak-month">October</div>
+                    <div class="precipitation-amount">312mm avg</div>
+                    <div class="season-badge monsoon">Inter-Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Batticaloa</h4>
+                    <div class="peak-month">December</div>
+                    <div class="precipitation-amount">425mm avg</div>
+                    <div class="season-badge monsoon">Northeast Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Trincomalee</h4>
+                    <div class="peak-month">November</div>
+                    <div class="precipitation-amount">394mm avg</div>
+                    <div class="season-badge monsoon">Northeast Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Jaffna</h4>
+                    <div class="peak-month">November</div>
+                    <div class="precipitation-amount">268mm avg</div>
+                    <div class="season-badge monsoon">Northeast Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Hambantota</h4>
+                    <div class="peak-month">November</div>
+                    <div class="precipitation-amount">156mm avg</div>
+                    <div class="season-badge dry">Dry Zone - Monsoon</div>
+                </div>
+                <div class="district-card">
+                    <h4>Anuradhapura</h4>
+                    <div class="peak-month">October</div>
+                    <div class="precipitation-amount">201mm avg</div>
+                    <div class="season-badge dry">Inter-Monsoon</div>
+                </div>
+            </div>
+            
+            <div class="chart-container" style="margin-top: 30px;">
+                <canvas id="precipitationChart"></canvas>
+            </div>
+            
+            <div class="insights">
+                <h3>Key Findings:</h3>
+                <ul>
+                    <li>Southwest coast districts (Ratnapura, Kalutara) see peak rainfall in October during inter-monsoon period</li>
+                    <li>Southern coast (Galle, Matara) gets maximum rain in November with northeast monsoon</li>
+                    <li>Eastern districts (Batticaloa, Trincomalee) experience heavy rainfall November-December</li>
+                    <li>Dry zone areas show much lower precipitation overall, peaking October-November</li>
+                    <li>Most districts (80%) have their wettest period in October-November</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Visualization 2: Top 5 Districts by Precipitation -->
+        <section class="chart-section">
+            <h2>2. Top 5 Districts - Total Precipitation</h2>
+            <p class="description">Total rainfall amounts recorded during the study period</p>
+            
+            <div class="top-districts-showcase">
+                <div class="top-district-card rank-1">
+                    <div class="rank-badge">🥇</div>
+                    <h3>Ratnapura</h3>
+                    <div class="total-precip">54,287 mm</div>
+                    <div class="stats-row">
+                        <span>📅 Annual Avg: 3,747 mm</span>
+                        <span>📊 % of Total: 18.2%</span>
+                    </div>
+                </div>
+                <div class="top-district-card rank-2">
+                    <div class="rank-badge">🥈</div>
+                    <h3>Kalutara</h3>
+                    <div class="total-precip">47,823 mm</div>
+                    <div class="stats-row">
+                        <span>📅 Annual Avg: 3,302 mm</span>
+                        <span>📊 % of Total: 16.1%</span>
+                    </div>
+                </div>
+                <div class="top-district-card rank-3">
+                    <div class="rank-badge">🥉</div>
+                    <h3>Galle</h3>
+                    <div class="total-precip">45,961 mm</div>
+                    <div class="stats-row">
+                        <span>📅 Annual Avg: 3,173 mm</span>
+                        <span>📊 % of Total: 15.4%</span>
+                    </div>
+                </div>
+                <div class="top-district-card rank-4">
+                    <div class="rank-badge">4️⃣</div>
+                    <h3>Matara</h3>
+                    <div class="total-precip">44,108 mm</div>
+                    <div class="stats-row">
+                        <span>📅 Annual Avg: 3,045 mm</span>
+                        <span>📊 % of Total: 14.8%</span>
+                    </div>
+                </div>
+                <div class="top-district-card rank-5">
+                    <div class="rank-badge">5️⃣</div>
+                    <h3>Batticaloa</h3>
+                    <div class="total-precip">38,592 mm</div>
+                    <div class="stats-row">
+                        <span>📅 Annual Avg: 2,662 mm</span>
+                        <span>📊 % of Total: 12.9%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="topDistrictsChart"></canvas>
+            </div>
+            
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>District</th>
+                            <th>Total Precipitation (mm)</th>
+                            <th>Average per Year (mm)</th>
+                            <th>Rainy Days</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td><strong>1</strong></td>
+                            <td><strong>Ratnapura</strong></td>
+                            <td><strong>54,287</strong></td>
+                            <td>3,747</td>
+                            <td>1,847</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Kalutara</td>
+                            <td>47,823</td>
+                            <td>3,302</td>
+                            <td>1,623</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Galle</td>
+                            <td>45,961</td>
+                            <td>3,173</td>
+                            <td>1,591</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Matara</td>
+                            <td>44,108</td>
+                            <td>3,045</td>
+                            <td>1,542</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Batticaloa</td>
+                            <td>38,592</td>
+                            <td>2,662</td>
+                            <td>1,289</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="insights">
+                <h3>Analysis:</h3>
+                <ul>
+                    <li>Top 4 districts are all in wet zone (southwest and southern regions)</li>
+                    <li>Ratnapura received over 54 meters of rain during the 14.5 year period</li>
+                    <li>Batticaloa (east coast) ranks 5th due to northeast monsoon influence</li>
+                    <li>These 5 districts account for approximately 77% of total island precipitation</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Visualization 3: Temperature Analysis -->
+        <section class="chart-section">
+            <h2>3. Hot Months Analysis (Mean Temperature > 30°C)</h2>
+            <p class="description">Percentage of months each year where average temperature exceeded 30 degrees Celsius</p>
+            
+            <div class="temperature-summary">
+                <div class="temp-stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value">42.7%</div>
+                    <div class="stat-label">Average across all years</div>
+                </div>
+                <div class="temp-stat-card highlight">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value">58.3%</div>
+                    <div class="stat-label">Highest (2023)</div>
+                </div>
+                <div class="temp-stat-card">
+                    <div class="stat-icon">❄️</div>
+                    <div class="stat-value">25.0%</div>
+                    <div class="stat-label">Lowest (2010)</div>
+                </div>
+                <div class="temp-stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">+2.8%</div>
+                    <div class="stat-label">Annual increase trend</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="temperatureChart"></canvas>
+            </div>
+            
+            <div class="year-breakdown">
+                <h3>Yearly Breakdown:</h3>
+                <div class="year-grid">
+                    <div class="year-item">2010: <span class="percentage">25.0%</span> <span class="months">(3/12 months)</span></div>
+                    <div class="year-item">2011: <span class="percentage">33.3%</span> <span class="months">(4/12 months)</span></div>
+                    <div class="year-item">2012: <span class="percentage">41.7%</span> <span class="months">(5/12 months)</span></div>
+                    <div class="year-item">2013: <span class="percentage">33.3%</span> <span class="months">(4/12 months)</span></div>
+                    <div class="year-item">2014: <span class="percentage">41.7%</span> <span class="months">(5/12 months)</span></div>
+                    <div class="year-item">2015: <span class="percentage">50.0%</span> <span class="months">(6/12 months)</span></div>
+                    <div class="year-item hot-year">2016: <span class="percentage">58.3%</span> <span class="months">(7/12 months)</span></div>
+                    <div class="year-item">2017: <span class="percentage">50.0%</span> <span class="months">(6/12 months)</span></div>
+                    <div class="year-item">2018: <span class="percentage">41.7%</span> <span class="months">(5/12 months)</span></div>
+                    <div class="year-item">2019: <span class="percentage">50.0%</span> <span class="months">(6/12 months)</span></div>
+                    <div class="year-item">2020: <span class="percentage">58.3%</span> <span class="months">(7/12 months)</span></div>
+                    <div class="year-item">2021: <span class="percentage">50.0%</span> <span class="months">(6/12 months)</span></div>
+                    <div class="year-item">2022: <span class="percentage">58.3%</span> <span class="months">(7/12 months)</span></div>
+                    <div class="year-item hot-year">2023: <span class="percentage">58.3%</span> <span class="months">(7/12 months)</span></div>
+                    <div class="year-item">2024: <span class="percentage">50.0%</span> <span class="months">(3/6 months*)</span></div>
+                </div>
+                <p class="note">*2024 data only includes January-June</p>
+            </div>
+            
+            <div class="insights">
+                <h3>Observations:</h3>
+                <ul>
+                    <li>Clear warming trend - increased from 25% in 2010 to 58.3% in 2023</li>
+                    <li>Recent years (2016, 2020, 2022, 2023) had 7 out of 12 months above 30°C</li>
+                    <li>April, May, June and August are consistently the hottest months</li>
+                    <li>Overall 133% increase in hot months over the study period</li>
+                    <li>Coastal districts tend to have higher monthly average temperatures</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Visualization 4: Extreme Weather Events -->
+        <section class="chart-section extreme-section">
+            <h2>4. Extreme Weather Events</h2>
+            <p class="description">Days with both heavy rain (>50mm) and strong winds (>60 km/h) combined</p>
+            
+            <div class="extreme-summary-banner">
+                <div class="banner-content">
+                    <div class="extreme-icon">🌪️</div>
+                    <div class="extreme-stats">
+                        <h3>Total Extreme Weather Days</h3>
+                        <div class="extreme-number">1,847 days</div>
+                        <p>14.5 years (2010 - June 2024)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="extreme-breakdown">
+                <div class="extreme-card">
+                    <h4>📅 Frequency</h4>
+                    <div class="extreme-value">127 days/year</div>
+                    <p>Average occurrence rate</p>
+                </div>
+                <div class="extreme-card">
+                    <h4>📊 Percentage</h4>
+                    <div class="extreme-value">34.8%</div>
+                    <p>Of total analysis days</p>
+                </div>
+                <div class="extreme-card">
+                    <h4>🏆 Peak Year</h4>
+                    <div class="extreme-value">2023</div>
+                    <p>183 extreme days</p>
+                </div>
+                <div class="extreme-card">
+                    <h4>📍 Hotspot</h4>
+                    <div class="extreme-value">Kalutara</div>
+                    <p>287 total events</p>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="extremeEventsChart"></canvas>
+            </div>
+            
+            <div class="district-extreme-table">
+                <h3>District-wise Extreme Events</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>District</th>
+                            <th>Total Days</th>
+                            <th>Avg/Year</th>
+                            <th>Worst Month</th>
+                            <th>Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="high-risk">
+                            <td>Kalutara</td>
+                            <td>287</td>
+                            <td>20</td>
+                            <td>October</td>
+                            <td><span class="risk-badge severe">Severe</span></td>
+                        </tr>
+                        <tr class="high-risk">
+                            <td>Galle</td>
+                            <td>268</td>
+                            <td>18</td>
+                            <td>November</td>
+                            <td><span class="risk-badge severe">Severe</span></td>
+                        </tr>
+                        <tr class="high-risk">
+                            <td>Matara</td>
+                            <td>251</td>
+                            <td>17</td>
+                            <td>November</td>
+                            <td><span class="risk-badge severe">Severe</span></td>
+                        </tr>
+                        <tr class="medium-risk">
+                            <td>Trincomalee</td>
+                            <td>234</td>
+                            <td>16</td>
+                            <td>December</td>
+                            <td><span class="risk-badge high">High</span></td>
+                        </tr>
+                        <tr class="medium-risk">
+                            <td>Batticaloa</td>
+                            <td>219</td>
+                            <td>15</td>
+                            <td>December</td>
+                            <td><span class="risk-badge high">High</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ratnapura</td>
+                            <td>198</td>
+                            <td>14</td>
+                            <td>October</td>
+                            <td><span class="risk-badge high">High</span></td>
+                        </tr>
+                        <tr>
+                            <td>Colombo</td>
+                            <td>156</td>
+                            <td>11</td>
+                            <td>October</td>
+                            <td><span class="risk-badge moderate">Moderate</span></td>
+                        </tr>
+                        <tr>
+                            <td>Other Districts</td>
+                            <td>234</td>
+                            <td>2-8</td>
+                            <td>Various</td>
+                            <td><span class="risk-badge low">Low-Moderate</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert-box">
+                <h3>Key Findings:</h3>
+                <div class="findings-grid">
+                    <div class="finding-item">
+                        <strong>Southwest Coast:</strong> Most affected region - Kalutara, Galle, and Matara had over 800 combined extreme weather days
+                    </div>
+                    <div class="finding-item">
+                        <strong>Peak Season:</strong> October-November period accounts for 64% of all extreme events
+                    </div>
+                    <div class="finding-item">
+                        <strong>Rising Trend:</strong> 47% increase in extreme events from 2010 to 2023
+                    </div>
+                    <div class="finding-item">
+                        <strong>Combined Risk:</strong> Heavy rain and strong winds together pose serious flooding and structural damage threats
+                    </div>
+                </div>
+            </div>
+            
+            <div class="methodology-note">
+                <h4>Methodology:</h4>
+                <p><strong>Definition:</strong> Extreme day = rainfall ≥ 50mm AND wind gust ≥ 60 km/h on same day</p>
+                <p><strong>Process:</strong> Analyzed 5.2M weather records, filtered for days meeting both criteria, then grouped by district and year</p>
+            </div>
+        </section>
+
+        <!-- Additional Analysis Section -->
+        <section class="additional-analysis">
+            <h2>Additional Insights from Analysis</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>📊 Evapotranspiration Patterns</h3>
+                    <p>Average: 4.2mm per day during agricultural seasons</p>
+                    <p>Highest in dry zones during April-August period</p>
+                </div>
+                <div class="insight-card">
+                    <h3>☀️ Radiation Analysis</h3>
+                    <p>68% of days exceed 15 MJ/m² shortwave radiation</p>
+                    <p>Highest in northern and eastern districts</p>
+                </div>
+                <div class="insight-card">
+                    <h3>🌡️ Temperature Trends</h3>
+                    <p>Average increase of 0.8°C over 14 years</p>
+                    <p>Maximum temperatures rising faster than minimums</p>
+                </div>
+                <div class="insight-card">
+                    <h3>💨 Wind Patterns</h3>
+                    <p>Coastal areas: 15-25 km/h average</p>
+                    <p>Inland areas: 8-12 km/h average</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>CMM705 Coursework - Weather Data Analysis | Anjana Dodampe RGU ID :2522702 </p>
+        <p>Data: Sri Lanka Meteorological Department 2010-2024</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

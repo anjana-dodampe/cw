@@ -1,0 +1,1177 @@
+/* Dashboard styles for weather analysis coursework */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+a:focus, button:focus {
+    outline: 2px solid #3498db;
+}
+
+header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 2rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.metric-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid #3498db;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.metric-card h3 {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 10px 0;
+}
+
+.metric-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.temperature-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.temp-stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.temp-stat-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.temp-stat-card.highlight {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border-color: #e74c3c;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 10px 0;
+}
+
+.temp-stat-card.highlight .stat-value {
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.temp-stat-card.highlight .stat-label {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.year-breakdown {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+}
+
+.year-breakdown h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+
+.year-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+}
+
+.year-item {
+    padding: 10px 15px;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.year-item.hot-year {
+    background: #ffebee;
+    font-weight: 600;
+    border-left: 4px solid #e74c3c;
+}
+
+.year-item .percentage {
+    font-weight: 600;
+    color: #3498db;
+    margin: 0 10px;
+}
+
+.year-item.hot-year .percentage {
+    color: #e74c3c;
+}
+
+.year-item .months {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.note {
+    margin-top: 10px;
+    font-style: italic;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Chart Sections */
+.chart-section {
+    background: white;
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-top: 3px solid #3498db;
+}
+
+.chart-section h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.district-precipitation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.district-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef;
+}
+
+.district-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border-color: #3498db;
+}
+
+.district-card h4 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.peak-month {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3498db;
+    margin: 10px 0;
+}
+
+.precipitation-amount {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.season-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.season-badge.monsoon {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+.season-badge.dry {
+    background: #fff8e1;
+    color: #f57c00;
+    border: 1px solid #ffe082;
+}
+
+.top-districts-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.top-district-card {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: white;
+    padding: 25px;
+    padding-right: 70px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+}
+
+.top-district-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.rank-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    color: #1e3c72;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.rank-1 { 
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+.rank-1 .rank-badge {
+    background: #fff;
+    color: #e67e22;
+    border: 3px solid #f39c12;
+}
+
+.rank-2 { 
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+}
+.rank-2 .rank-badge {
+    background: #fff;
+    color: #7f8c8d;
+    border: 3px solid #95a5a6;
+}
+
+.rank-3 { 
+    background: linear-gradient(135deg, #d35400 0%, #c0392b 100%);
+}
+.rank-3 .rank-badge {
+    background: #fff;
+    color: #c0392b;
+    border: 3px solid #d35400;
+}
+
+.top-district-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.total-precip {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.stats-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9rem;
+    opacity: 0.95;
+    margin-top: 10px;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    margin: 20px 0;
+}
+
+/* Insights */
+.insights {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 4px solid #667eea;
+}
+
+.insights h3 {
+    color: #1e3c72;
+    margin-bottom: 10px;
+}
+
+.insights ul {
+    list-style-position: inside;
+    color: #555;
+}
+
+.insights li {
+    margin: 8px 0;
+    padding-left: 10px;
+}
+
+/* Data Table */
+.data-table {
+    margin-top: 25px;
+    overflow-x: auto;
+}
+
+/* Extreme Weather Events Section */
+.extreme-section {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+    border: 2px solid #ff6b6b;
+}
+
+.extreme-summary-banner {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.extreme-icon {
+    font-size: 5rem;
+}
+
+.extreme-stats h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.extreme-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.extreme-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.extreme-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.extreme-card h4 {
+    color: #ff6b6b;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.extreme-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e3c72;
+    margin: 10px 0;
+}
+
+.extreme-card p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.district-extreme-table {
+    margin: 30px 0;
+}
+
+.district-extreme-table h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+
+.district-extreme-table table {
+    width: 100%;
+}
+
+.high-risk {
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.medium-risk {
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.risk-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.risk-badge.severe {
+    background: #ff6b6b;
+    color: white;
+}
+
+.risk-badge.high {
+    background: #ffa726;
+    color: white;
+}
+
+.risk-badge.moderate {
+    background: #ffca28;
+    color: #333;
+}
+
+.risk-badge.low {
+    background: #66bb6a;
+    color: white;
+}
+
+.findings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.finding-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.methodology-note {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+    border-left: 4px solid #667eea;
+}
+
+.methodology-note h4 {
+    color: #1e3c72;
+    margin-bottom: 10px;
+}
+
+.methodology-note p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Alert Box */
+.alert-box {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.alert-box h3 {
+    margin-bottom: 10px;
+}
+
+.alert-box strong {
+    font-size: 1.2rem;
+}
+
+/* Additional Analysis */
+.additional-analysis {
+    background: white;
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.additional-analysis h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.insight-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.insight-card:hover {
+    transform: scale(1.05);
+}
+
+.insight-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.insight-card p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+/* Footer */
+footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    table {
+        font-size: 0.9rem;
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+}
+
+/* Extreme Weather Events Section */
+.extreme-section {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+    border: 2px solid #ff6b6b;
+}
+
+.extreme-summary-banner {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.extreme-icon {
+    font-size: 5rem;
+}
+
+.extreme-stats h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.extreme-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.extreme-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.extreme-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.extreme-card h4 {
+    color: #ff6b6b;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.extreme-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e3c72;
+    margin: 10px 0;
+}
+
+.extreme-card p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.district-extreme-table {
+    margin: 30px 0;
+}
+
+.district-extreme-table h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+
+.district-extreme-table table {
+    width: 100%;
+}
+
+.high-risk {
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.medium-risk {
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.risk-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.risk-badge.severe {
+    background: #ff6b6b;
+    color: white;
+}
+
+.risk-badge.high {
+    background: #ffa726;
+    color: white;
+}
+
+.risk-badge.moderate {
+    background: #ffca28;
+    color: #333;
+}
+
+.risk-badge.low {
+    background: #66bb6a;
+    color: white;
+}
+
+.findings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.finding-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.methodology-note {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+    border-left: 4px solid #667eea;
+}
+
+.methodology-note h4 {
+    color: #1e3c72;
+    margin-bottom: 10px;
+}
+
+.methodology-note p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.highlight-row {
+    background: #fff8e1;
+    border-left: 4px solid #f39c12;
+}
+
+.highlight-row:hover {
+    background: #fff3cd;
+}
+
+/* text fixes */
+.finding-item {
+    color: #333 !important;
+    line-height: 1.7 !important;
+}
+
+.finding-item strong {
+    color: #1e3c72 !important;
+    font-weight: 700 !important;
+}
+
+.alert-box strong {
+    color: #5a3d00 !important;
+    font-weight: 700 !important;
+}
+
+.top-district-card h3 {
+    padding-right: 10px;
+}
+
+.top-district-card .total-precip {
+    clear: both;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .chart-section {
+        padding: 20px;
+    }
+    
+    .chart-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .district-precipitation-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+    
+    .top-districts-showcase {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .metric-card {
+        padding: 20px 15px;
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+    }
+    
+    .chart-section {
+        padding: 20px 15px;
+        margin: 20px 0;
+    }
+    
+    .chart-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    .description {
+        font-size: 0.9rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+        margin: 20px 0;
+    }
+    
+    .district-precipitation-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .district-card {
+        padding: 15px 10px;
+    }
+    
+    .peak-month {
+        font-size: 1.5rem;
+    }
+    
+    .precipitation-amount {
+        font-size: 0.95rem;
+    }
+    
+    .top-districts-showcase {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .top-district-card {
+        padding: 20px;
+        padding-right: 60px;
+    }
+    
+    .rank-badge {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .data-table {
+        overflow-x: auto;
+        font-size: 0.85rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px 6px;
+        font-size: 0.85rem;
+    }
+    
+    .temperature-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .temp-stat-card {
+        padding: 15px;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+    }
+    
+    .year-breakdown {
+        padding: 15px;
+    }
+    
+    .year-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .year-item {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .extreme-summary-banner {
+        padding: 20px 15px;
+    }
+    
+    .banner-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .extreme-icon {
+        font-size: 3.5rem;
+    }
+    
+    .extreme-number {
+        font-size: 2.5rem;
+    }
+    
+    .extreme-breakdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .extreme-card {
+        padding: 15px;
+    }
+    
+    .extreme-value {
+        font-size: 1.8rem;
+    }
+    
+    .findings-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .finding-item {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .alert-box {
+        padding: 15px;
+    }
+    
+    .methodology-note {
+        padding: 15px;
+    }
+    
+    .insights ul {
+        padding-left: 20px;
+    }
+    
+    .insights li {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+}
+
+/* Small mobile styles */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .metric-card {
+        padding: 18px 12px;
+    }
+    
+    .metric-card h3 {
+        font-size: 0.8rem;
+    }
+    
+    .metric-value {
+        font-size: 1.8rem;
+    }
+    
+    .chart-section {
+        padding: 15px 12px;
+    }
+    
+    .chart-section h2 {
+        font-size: 1.1rem;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .district-precipitation-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .district-card h4 {
+        font-size: 1rem;
+    }
+    
+    .peak-month {
+        font-size: 1.3rem;
+    }
+    
+    .temperature-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .extreme-breakdown {
+        grid-template-columns: 1fr;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 6px 4px;
+        font-size: 0.75rem;
+    }
+    
+    .top-district-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .total-precip {
+        font-size: 1.8rem;
+    }
+    
+    .stats-row {
+        font-size: 0.8rem;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+    
+    .chart-section {
+        page-break-inside: avoid;
+    }
+    
+    .extreme-summary-banner,
+    .top-district-card {
+        box-shadow: none;
+    }
+}
