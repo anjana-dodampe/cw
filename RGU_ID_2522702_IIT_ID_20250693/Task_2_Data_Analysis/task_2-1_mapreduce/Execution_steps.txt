@@ -1,0 +1,48 @@
+cd /home/iitgcpuser/cw/RGU_ID_2522702_IIT_ID_20250693/Task_2/task_2-1_mapreduce
+mvn clean package -DskipTests
+
+
+
+ls -lh target/cmm705-coursework-1.0-SNAPSHOT.jar
+
+--Copy datasets to namenode container
+docker cp /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/Datasets/weatherData.csv namenode:/tmp/
+docker cp /home/iitgcpuser/CMM705---Big-Data-Programming---Coursework/Datasets/locationData.csv namenode:/tmp/
+
+-- Upload to HDFS
+docker exec namenode hdfs dfs -mkdir -p /input
+docker exec namenode hdfs dfs -put -f /tmp/weatherData.csv /input/
+docker exec namenode hdfs dfs -put -f /tmp/locationData.csv /input/
+
+-- Verify upload
+docker exec namenode hdfs dfs -ls /input/
+docker exec namenode hdfs dfs -du -h /input/
+
+docker exec namenode hdfs dfs -ls /output/
+
+--Delete Output if needed
+docker exec namenode hdfs dfs -rm -r /output/
+
+--Copy the jar
+docker cp target/cmm705-coursework-1.0-SNAPSHOT.jar namenode:/tmp/
+
+-- Run the MapReduce job
+docker exec namenode bash -c "export HADOOP_CLASSPATH=/tmp/cmm705-coursework-1.0-SNAPSHOT.jar && hadoop com.rgu.bigdata.MonthlyWeatherDriver /input/weatherData.csv /output/task2-1-1_output"
+
+
+--Download Results
+docker exec namenode rm /tmp/task1_output.txt
+docker exec namenode hdfs dfs -get /output/task2-1-1_output/part-r-00000 /tmp/task2-1-1_output.txt
+
+docker cp namenode:/tmp/task2-1-1_output.txt outputs/.
+
+
+Task 2
+
+docker exec namenode bash -c "export HADOOP_CLASSPATH=/tmp/cmm705-coursework-1.0-SNAPSHOT.jar && hadoop com.rgu.bigdata.MaxPrecipitationDriver /input/weatherData.csv /output/task2-1-2_output"
+
+
+docker exec namenode rm /tmp/task2-2_output.txt
+docker exec namenode hdfs dfs -get /output/task2-1-2_output/part-r-00000 /tmp/task2-1-2_output.txt
+
+docker cp namenode:/tmp/task2-1-2_output.txt  outputs/.
